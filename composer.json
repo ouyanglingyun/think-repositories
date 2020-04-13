@@ -16,12 +16,9 @@
     "topthink/think-orm": "^2.0",
     "topthink/think-helper": "^3.0.3"
   },
-  "require-dev": {
-    "mockery/mockery": "dev-master@dev"
-  },
   "autoload": {
     "psr-4": {
-      "Lingyun\\repositories": "src"
+      "Lingyun\\repositories\\": "src"
     }
   },
   "extra": {
