@@ -1,0 +1,37 @@
+{
+  "name": "lingyun/think-repositories",
+  "description": "Thinkphp Repositories",
+  "license": "MIT",
+  "homepage": "https://github.com/ouyanglingyun/think-repositories",
+  "keywords": ["Thinkphp", "repository", "repositories", "eloquent", "database"],
+  "authors": [
+    {
+      "name": "Lingyun",
+      "email": "58219433@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "topthink/framework": "^6.0.0",
+    "topthink/think-orm": "^2.0",
+    "topthink/think-helper": "^3.0.3"
+  },
+  "require-dev": {
+    "mockery/mockery": "dev-master@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lingyun\\repositories": "src"
+    }
+  },
+  "extra": {
+    "think": {
+        "services": [
+            "Lingyun\\Repositories\\Service"
+        ],
+        "config": {
+            "repositories": "src/config/repositories.php"
+        }
+    }
+  }
+}
