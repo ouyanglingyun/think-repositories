@@ -10,7 +10,7 @@ class Service extends BaseService
     {
 
         $this->commands([
-            'make:model' => Console\MakeRepository::class,
+            'make:repository' => Console\MakeRepository::class,
         ]);
     }
 }
