@@ -6,7 +6,7 @@
   "keywords": ["Thinkphp", "repository", "repositories", "eloquent", "database"],
   "authors": [
     {
-      "name": "Lingyun",
+      "name": "lingyun",
       "email": "58219433@qq.com"
     }
   ],
@@ -18,17 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Lingyun\\repositories\\": "src"
-    }
-  },
-  "extra": {
-    "think": {
-        "services": [
-            "Lingyun\\Repositories\\Service"
-        ],
-        "config": {
-            "repositories": "src/config/repositories.php"
-        }
+      "lingyun\\repositories\\": "src"
     }
   }
 }

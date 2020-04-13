@@ -1,7 +1,7 @@
 # Thinkphp Repositories
 
 
-think-Repositories is a package for Thinkphp 6.0 which is used to abstract the database layer. This makes applications much easier to maintain.
+think-repositories is a package for Thinkphp 6.0 which is used to abstract the database layer. This makes applications much easier to maintain.
 
 ## Installation
 
@@ -23,13 +23,14 @@ then run ```composer update```
 
 ## Usage
 
-First, create your repository class. Note that your repository class MUST extend ```Lingyun\Repositories\\Repository``` and implement model() method
+First, create your repository class. Note that your repository class MUST extend ```lingyun\repositories\Repository``` and implement model() method
 
 ```php
-<?php namespace app\repositories;
+<?php 
+namespace app\repositories;
 
-use Lingyun\Repositories\Contracts\RepositoryInterface;
-use Lingyun\Repositories\Repository;
+use lingyun\repositories\Contracts\RepositoryInterface;
+use lingyun\repositories\Repository;
 
 class FilmsRepository extends Repository {
 
@@ -62,9 +63,10 @@ class Film extends Model {
 And finally, use the repository in the controller:
 
 ```php
-<?php namespace app\controller;
+<?php 
+namespace app\controller;
 
-use App\Repositories\FilmsRepository as Film;
+use app\repositories\FilmsRepository as Film;
 
 class FilmsController extends Controller {
 
@@ -85,7 +87,7 @@ class FilmsController extends Controller {
 
 The following methods are available:
 
-##### Lingyun\Repositories\Contracts\RepositoryInterface
+##### lingyun\repositories\Contracts\RepositoryInterface
 
 ```php
 public function all($columns = array('*'))

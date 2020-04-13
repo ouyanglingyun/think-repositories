@@ -1,15 +1,15 @@
 <?php
 
-namespace Lingyun\Repositories;
+namespace lingyun\repositories;
 
-use Lingyun\Repositories\Contracts\RepositoryInterface;
-use Lingyun\Repositories\Exceptions\RepositoryException;
+use lingyun\repositories\Contracts\RepositoryInterface;
+use lingyun\repositories\Exceptions\RepositoryException;
 use think\App;
 use think\Model;
 
 /**
  * Class Repository
- * @package Lingyun\Repositories\Eloquent
+ * @package lingyun\repositories
  */
 abstract class Repository implements RepositoryInterface
 {
@@ -28,7 +28,7 @@ abstract class Repository implements RepositoryInterface
     /**
      * @param App $app
      * @param Collection $collection
-     * @throws \Lingyun\Repositories\Exceptions\RepositoryException
+     * @throws \lingyun\Repositories\Exceptions\RepositoryException
      */
     public function __construct(App $app)
     {

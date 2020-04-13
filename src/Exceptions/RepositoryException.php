@@ -1,10 +1,10 @@
 <?php
 
-namespace Lingyun\Repositories\Exceptions;
+namespace lingyun\repositories\Exceptions;
 
 /**
  * Class RepositoryException
- * @package Lingyun\Repositories\Exceptions
+ * @package lingyun\repositories\Exceptions
  */
 class RepositoryException extends \Exception
 {

@@ -1,8 +1,9 @@
-<?php namespace Lingyun\Repositories\Contracts;
+<?php
+namespace lingyun\repositories\Contracts;
 
 /**
  * Interface RepositoryInterface
- * @package Lingyun\Repositories\Contracts
+ * @package lingyun\Repositories\Contracts
  */
 interface RepositoryInterface
 {
