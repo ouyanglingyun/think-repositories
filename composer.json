@@ -2,6 +2,7 @@
   "name": "lingyun/think-repositories",
   "description": "Thinkphp Repositories",
   "license": "MIT",
+  "type": "think-extend",
   "homepage": "https://github.com/ouyanglingyun/think-repositories",
   "keywords": ["Thinkphp", "repository", "repositories", "eloquent", "database"],
   "authors": [

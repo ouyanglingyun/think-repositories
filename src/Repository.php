@@ -6,6 +6,7 @@ use lingyun\repositories\Contracts\RepositoryInterface;
 use lingyun\repositories\Exceptions\RepositoryException;
 use think\App;
 use think\Model;
+use think\Request;
 
 /**
  * Class Repository
@@ -15,24 +16,27 @@ abstract class Repository implements RepositoryInterface
 {
 
     /**
-     * @var App
+     * @var \think\App
      */
     private $app;
     /**
-     * @var
+     * @var think\Model
      */
     protected $model;
-
-    protected $newModel;
+    /**
+     * @var \think\Request
+     */
+    protected $request;
 
     /**
      * @param App $app
      * @param Collection $collection
      * @throws \lingyun\Repositories\Exceptions\RepositoryException
      */
-    public function __construct(App $app)
+    public function __construct(App $app, Request $request)
     {
-        $this->app = $app;
+        $this->app     = $app;
+        $this->request = $request;
         $this->makeModel();
     }
 
@@ -63,7 +67,6 @@ abstract class Repository implements RepositoryInterface
         if (!$model instanceof Model) {
             throw new RepositoryException("Class {$this->model()} must be an instance of think\\Model");
         }
-
         return $this->model = $model->newInstance();
     }
 }
