@@ -1,10 +1,11 @@
 <?php
-
+declare (strict_types = 1);
 namespace lingyun\repositories;
 
 use lingyun\repositories\Contracts\RepositoryInterface;
 use lingyun\repositories\Exceptions\RepositoryException;
 use think\App;
+use think\Container;
 use think\helper\Str;
 use think\Model;
 use think\Request;
@@ -38,8 +39,26 @@ abstract class Repository implements RepositoryInterface
     {
         $this->app     = $app;
         $this->request = $request;
-        $this->makeModel();
+        $this->model   = $this->makeModel();
     }
+
+    /**
+     * Specify Model class name
+     *
+     * @return mixed
+     */
+    abstract public function model();
+
+    /**
+     * @param $id
+     * @param array $columns
+     * @return mixed
+     */
+    public function find($id, $columns = true)
+    {
+        return $this->model->field($columns)->findOrEmpty($id);
+    }
+
     // 调用实际类的方法
     public function __call($method, $params)
     {
@@ -68,35 +87,20 @@ abstract class Repository implements RepositoryInterface
     protected static function createFacade(string $class = '', array $args = [], bool $newInstance = false)
     {
         $class = $class ?: static::class;
-        return (new $class((new App()), (new Request())));
-    }
-    /**
-     * Specify Model class name
-     *
-     * @return mixed
-     */
-    abstract public function model();
-
-    /**
-     * @param $id
-     * @param array $columns
-     * @return mixed
-     */
-    public function find($id, $columns = true)
-    {
-        return $this->model->field($columns)->find($id);
+        return Container::getInstance()->make($class ?: App::class, $args, $newInstance);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      * @throws RepositoryException
      */
-    public function makeModel()
+    protected function makeModel()
     {
-        $model = $this->app->make($this->model());
+        $calss = $this->model();
+        $model = Container::getInstance()->make($this->model() ?: Model::class); //$this->app->make($this->model());
         if (!$model instanceof Model) {
             throw new RepositoryException("Class {$this->model()} must be an instance of think\\Model");
         }
-        return $this->model = $model->newInstance();
+        return $this->model = $model; //->newInstance();
     }
 }
