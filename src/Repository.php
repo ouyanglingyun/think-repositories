@@ -7,9 +7,9 @@ use lingyun\repositories\Exceptions\RepositoryException;
 use think\App;
 use think\Container;
 use think\helper\Str;
+use think\Http;
 use think\Model;
 use think\Request;
-use think\Validate;
 
 /**
  * Class Repository
@@ -36,11 +36,16 @@ abstract class Repository implements RepositoryInterface
      * @param Collection $collection
      * @throws \lingyun\Repositories\Exceptions\RepositoryException
      */
-    public function __construct(App $app, Request $request)
+    public function __construct(App $app, Request $request, Http $http)
     {
-        $this->app     = $app;
-        $this->request = $request;
-        $this->model   = $this->makeModel();
+        $this->app              = $app;
+        $this->request          = $request;
+        $this->model            = $this->makeModel();
+        $this->query            = $request->param(); //当前请求参数
+        $this->application_name = $http->getName(); //当前应用名
+        $this->controller_name  = str_replace('.', '/', preg_replace('/v\d+./u', '', $request->controller())); //当前控制器
+        $this->action_name      = $request->action(); //当前操作
+        unset($this->query[str_replace('.', '_', $request->baseUrl())]); //过滤请求参数
     }
 
     /**
@@ -134,7 +139,7 @@ abstract class Repository implements RepositoryInterface
         $v->message($message);
 
         // 是否批量验证
-        if ($batc) {
+        if ($batch) {
             $v->batch(true);
         }
 
