@@ -134,7 +134,7 @@ abstract class Repository implements RepositoryInterface
         $v->message($message);
 
         // 是否批量验证
-        if ($batch || $this->batchValidate) {
+        if ($batc) {
             $v->batch(true);
         }
 
