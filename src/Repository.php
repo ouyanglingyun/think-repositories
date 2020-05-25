@@ -46,7 +46,12 @@ abstract class Repository implements RepositoryInterface
         $this->controller_name  = str_replace('.', '/', preg_replace('/v\d+./u', '', $request->controller())); //当前控制器
         $this->action_name      = $request->action(); //当前操作
         unset($this->query[str_replace('.', '_', $request->baseUrl())]); //过滤请求参数
+        // 初始化
+        $this->initialize();
     }
+    // 初始化
+    protected function initialize()
+    {}
 
     /**
      * Specify Model class name
