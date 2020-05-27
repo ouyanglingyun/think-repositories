@@ -21,7 +21,7 @@ abstract class Repository implements RepositoryInterface
     /**
      * @var \think\App
      */
-    private $app;
+    protected $app;
     /**
      * @var think\Model
      */
@@ -102,7 +102,7 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \think\Model
      * @throws RepositoryException
      */
     protected function makeModel()
