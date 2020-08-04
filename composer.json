@@ -4,7 +4,13 @@
   "license": "MIT",
   "type": "think-extend",
   "homepage": "https://github.com/ouyanglingyun/think-repositories",
-  "keywords": ["Thinkphp", "repository", "repositories", "eloquent", "database"],
+  "keywords": [
+    "Thinkphp",
+    "repository",
+    "repositories",
+    "eloquent",
+    "database"
+  ],
   "authors": [
     {
       "name": "lingyun",
@@ -20,6 +26,13 @@
   "autoload": {
     "psr-4": {
       "lingyun\\repositories\\": "src"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "lingyun\\repositories\\Service"
+      ]
     }
   }
 }

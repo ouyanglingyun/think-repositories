@@ -39,6 +39,10 @@ class FilmsRepository extends Repository {
     }
 }
 ```
+It can be created using the ```make:R``` command:
+
+```php think make:R admin@data/City common@data/DataCity --E=common@BaseRepository```
+
 
 By implementing ```model()``` method you telling repository what model class you want to use. Now, create ```App\Film``` model:
 

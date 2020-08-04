@@ -1,0 +1,24 @@
+<?php
+declare (strict_types = 1);
+
+namespace {%namespace%};
+
+use {%useExtendsClass%};
+use think\Request;
+
+class {%className%} extends {%extendsClass%}
+{
+    /**
+     * Specify Model class name
+     *
+     * @return mixed
+     */
+   public function model()
+    {
+
+        return {%modelClass%};
+    }
+    // 初始化
+    protected function initialize()
+    {}
+}
