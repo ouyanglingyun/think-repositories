@@ -1,0 +1,12 @@
+<?php
+declare (strict_types = 1);
+
+namespace {%namespace%};
+
+use {%useExtendsClass%};
+use think\Request;
+
+class {%className%} extends {%extendsClass%}
+{
+
+}

@@ -13,7 +13,7 @@ class {%className%} extends {%extendsClass%}
      *
      * @return mixed
      */
-   public function model()
+   protected function model()
     {
 
         return {%modelClass%};

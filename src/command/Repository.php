@@ -15,7 +15,7 @@ class Repository extends Make
     protected function configure()
     {
         parent::configure();
-        $this->addArgument('model', Argument::REQUIRED, "The model of the class");
+        $this->addArgument('model', Argument::OPTIONAL, "The model of the class");
         $this->setName('make:R')
             ->addOption('extends', "E", Option::VALUE_OPTIONAL, 'Generate extends an Repository class.')
             ->setDescription('Create a new resource Repository class');
@@ -32,8 +32,14 @@ class Repository extends Make
         }
 
         $extendsClassname = $this->getClassName($extends);
-        $classname        = $this->getClassName($name);
-        $modelname        = $this->getModelName($model);
+
+        $classname = $this->getClassName($name);
+
+        $modelname = null;
+
+        if (!empty($model)) {
+            $modelname = $this->getModelName($model);
+        }
 
         $pathname = $this->getPathName($classname);
 
@@ -51,17 +57,26 @@ class Repository extends Make
         $output->writeln('<info>' . $this->type . ':' . $classname . ' created successfully.</info>');
     }
 
-    protected function buildRepositoryClass(string $name, string $model, string $extends)
+    protected function buildRepositoryClass(string $name, string $model = null, string $extends = null)
     {
-        $stub = file_get_contents($this->getStub());
+        $type = null;
 
-        $namespace         = trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
-        $extends_namespace = trim(implode('\\', array_slice(explode('\\', $extends), 0, -1)), '\\');
+        $extends_namespace = $modelClass = $extendsClass = '';
 
-        $class = str_replace($namespace . '\\', '', $name);
+        if (!empty($model)) {
+            $type       = 'plain';
+            $modelClass = "\\" . $model . "::Class";
+        }
 
-        $modelClass   = "\\" . $model . "::Class";
-        $extendsClass = str_replace($extends_namespace . '\\', '', $extends);
+        $stub = file_get_contents($this->getStub($type));
+
+        $namespace = trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
+        $class     = str_replace($namespace . '\\', '', $name);
+
+        if (!empty($extends)) {
+            $extends_namespace = trim(implode('\\', array_slice(explode('\\', $extends), 0, -1)), '\\');
+            $extendsClass      = str_replace($extends_namespace . '\\', '', $extends);
+        }
 
         return str_replace([
             '{%className%}',
@@ -82,10 +97,12 @@ class Repository extends Make
         ], $stub);
     }
 
-    protected function getStub(): string
+    protected function getStub($type = null): string
     {
         $stubPath = __DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
-
+        if (!empty($type)) {
+            return $stubPath . 'repository.plain.stub';
+        }
         return $stubPath . 'repository.stub';
     }
     protected function getModelName(string $name): string
