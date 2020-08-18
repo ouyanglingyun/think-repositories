@@ -82,13 +82,8 @@ class Model extends Make
         return __DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'model.stub';
     }
 
-    protected function getClassName(string $name): string
-    {
-        return parent::getClassName($name) . ($this->app->config->get('route.controller_suffix') ? 'Controller' : '');
-    }
-
     protected function getNamespace(string $app): string
     {
-        return parent::getNamespace($app) . '\\controller';
+        return parent::getNamespace($app) . '\\model';
     }
 }
