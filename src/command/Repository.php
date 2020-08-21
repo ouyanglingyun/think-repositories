@@ -24,7 +24,9 @@ class Repository extends Make
     protected function execute(Input $input, Output $output)
     {
         $name  = trim($input->getArgument('name'));
-        $model = trim($input->getArgument('model'));
+        $model = $input->getArgument('model');
+        $model = trim($model);
+
         if ($input->hasOption('extends')) {
             $extends = $input->getOption('extends');
         } else {
@@ -59,12 +61,12 @@ class Repository extends Make
 
     protected function buildRepositoryClass(string $name, string $model = null, string $extends = null)
     {
-        $type = null;
 
+        $type              = 'plain';
         $extends_namespace = $modelClass = $extendsClass = '';
 
         if (!empty($model)) {
-            $type       = 'plain';
+            $type       = null;
             $modelClass = "\\" . $model . "::Class";
         }
 
