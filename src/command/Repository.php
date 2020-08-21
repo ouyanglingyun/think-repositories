@@ -25,7 +25,8 @@ class Repository extends Make
     {
         $name  = trim($input->getArgument('name'));
         $model = $input->getArgument('model');
-        $model = trim($model);
+
+        empty($model) || $model = trim($model);
 
         if ($input->hasOption('extends')) {
             $extends = $input->getOption('extends');
