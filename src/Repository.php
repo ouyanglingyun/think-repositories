@@ -58,7 +58,7 @@ abstract class Repository implements RepositoryInterface
      *
      * @return mixed
      */
-    abstract public function model();
+    abstract protected function model();
 
     /**
      * @param $id
