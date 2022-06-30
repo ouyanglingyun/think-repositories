@@ -1,12 +1,11 @@
 <?php
 declare (strict_types = 1);
-namespace lingyun\repositories;
+namespace lingyun;
 
 use lingyun\repositories\Contracts\RepositoryInterface;
 use lingyun\repositories\Exceptions\RepositoryException;
 use think\App;
 use think\Container;
-use think\helper\Str;
 use think\Http;
 use think\Model;
 use think\Request;
@@ -79,10 +78,6 @@ abstract class Repository implements RepositoryInterface
     // 调用实际类的方法
     public static function __callStatic($method, $params)
     {
-        // Facade
-        if (Str::endsWith($method, 'Facade')) {
-            $method = substr($method, 0, -6);
-        }
         return call_user_func_array([static::createFacade(), $method], $params);
     }
 

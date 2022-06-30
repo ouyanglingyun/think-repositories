@@ -1,5 +1,6 @@
 # Thinkphp Repositories
 
+[![Latest Stable Version](http://poser.pugx.org/lingyun/think-repositories/v)](https://packagist.org/packages/lingyun/think-repositories) [![Total Downloads](http://poser.pugx.org/lingyun/think-repositories/downloads)](https://packagist.org/packages/lingyun/think-repositories) [![Latest Unstable Version](http://poser.pugx.org/lingyun/think-repositories/v/unstable)](https://packagist.org/packages/lingyun/think-repositories) [![License](http://poser.pugx.org/lingyun/think-repositories/license)](https://packagist.org/packages/lingyun/think-repositories) [![PHP Version Require](http://poser.pugx.org/lingyun/think-repositories/require/php)](https://packagist.org/packages/lingyun/think-repositories)
 
 think-repositories is a package for Thinkphp 6.0 which is used to abstract the database layer. This makes applications much easier to maintain.
 
@@ -86,81 +87,6 @@ class FilmsController extends Controller {
     }
 }
 ```
-
-## Available Methods
-
-The following methods are available:
-
-##### lingyun\repositories\Contracts\RepositoryInterface
-
-```php
-public function all($columns = array('*'))
-public function lists($value, $key = null)
-public function paginate($perPage = 1, $columns = array('*'));
-public function create(array $data)
-// if you use mongodb then you'll need to specify primary key $attribute
-public function update(array $data, $id, $attribute = "id")
-public function delete($id)
-public function find($id, $columns = array('*'))
-public function findBy($field, $value, $columns = array('*'))
-public function findAllBy($field, $value, $columns = array('*'))
-public function findWhere($where, $columns = array('*'))
-```
-
-
-### Example usage
-
-
-Create a new film in repository:
-
-```php
-$this->film->create(Input::all());
-```
-
-Update existing film:
-
-```php
-$this->film->update(Input::all(), $film_id);
-```
-
-Delete film:
-
-```php
-$this->film->delete($id);
-```
-
-Find film by film_id;
-
-```php
-$this->film->find($id);
-```
-
-you can also chose what columns to fetch:
-
-```php
-$this->film->find($id, ['title', 'description', 'release_date']);
-```
-
-Get a single row by a single column criteria.
-
-```php
-$this->film->findBy('title', $title);
-```
-
-Or you can get all rows by a single column criteria.
-```php
-$this->film->findAllBy('author_id', $author_id);
-```
-
-Get all results by multiple fields
-
-```php
-$this->film->findWhere([
-    'author_id' => $author_id,
-    ['year','>',$year]
-]);
-```
-
 
 ## Thanks
 

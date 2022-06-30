@@ -1,7 +1,7 @@
 {
   "name": "lingyun/think-repositories",
   "description": "Thinkphp Repositories",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "think-extend",
   "homepage": "https://github.com/ouyanglingyun/think-repositories",
   "keywords": [
@@ -18,14 +18,11 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
-    "topthink/framework": "^6.0.0",
-    "topthink/think-orm": "^2.0",
-    "topthink/think-helper": "^3.0.3"
+    "topthink/framework": "^6.0.0"
   },
   "autoload": {
     "psr-4": {
-      "lingyun\\repositories\\": "src"
+      "lingyun\\": "src"
     }
   },
   "extra": {
