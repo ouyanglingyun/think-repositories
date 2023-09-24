@@ -1,22 +1,23 @@
 <?php
-declare (strict_types = 1);
-namespace lingyun;
 
-use lingyun\repositories\Contracts\RepositoryInterface;
-use lingyun\repositories\Exceptions\RepositoryException;
+declare(strict_types=1);
+
+namespace think;
+
 use think\App;
 use think\Container;
 use think\Http;
 use think\Model;
 use think\Request;
+use think\repositories\Contracts\RepositoryInterface;
+use think\repositories\Exceptions\RepositoryException;
 
 /**
  * Class Repository
- * @package lingyun\repositories
+ * @package think\repositories
  */
 abstract class Repository implements RepositoryInterface
 {
-
     /**
      * @var \think\App
      */
@@ -30,10 +31,15 @@ abstract class Repository implements RepositoryInterface
      */
     protected $request;
 
+    protected $query;
+    protected $applicationName;
+    protected $controllerName;
+    protected $actionName;
+
     /**
      * @param App $app
      * @param Collection $collection
-     * @throws \lingyun\Repositories\Exceptions\RepositoryException
+     * @throws \think\repositories\Exceptions\RepositoryException
      */
     public function __construct(App $app, Request $request, Http $http)
     {
@@ -41,16 +47,17 @@ abstract class Repository implements RepositoryInterface
         $this->request          = $request;
         $this->model            = $this->makeModel();
         $this->query            = $request->param(); //当前请求参数
-        $this->application_name = $http->getName(); //当前应用名
-        $this->controller_name  = str_replace('.', '/', preg_replace('/v\d+./u', '', $request->controller())); //当前控制器
-        $this->action_name      = $request->action(); //当前操作
+        $this->applicationName = $http->getName(); //当前应用名
+        $this->controllerName  = str_replace('.', '/', preg_replace('/v\d+./u', '', $request->controller())); //当前控制器
+        $this->actionName      = $request->action(); //当前操作
         unset($this->query[str_replace('.', '_', $request->baseUrl())]); //过滤请求参数
         // 初始化
         $this->initialize();
     }
     // 初始化
     protected function initialize()
-    {}
+    {
+    }
 
     /**
      * Specify Model class name
@@ -102,7 +109,6 @@ abstract class Repository implements RepositoryInterface
      */
     protected function makeModel()
     {
-        $calss = $this->model();
         $model = Container::getInstance()->make($this->model() ?: Model::class); //$this->app->make($this->model());
         if (!$model instanceof Model) {
             throw new RepositoryException("Class {$this->model()} must be an instance of think\\Model");

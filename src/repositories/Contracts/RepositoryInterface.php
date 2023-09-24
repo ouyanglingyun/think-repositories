@@ -1,10 +1,12 @@
 <?php
-declare (strict_types = 1);
-namespace lingyun\repositories\Contracts;
+
+declare(strict_types=1);
+
+namespace think\repositories\Contracts;
 
 /**
  * Interface RepositoryInterface
- * @package lingyun\Repositories\Contracts
+ * @package think\repositories\Contracts
  */
 interface RepositoryInterface
 {
@@ -14,5 +16,4 @@ interface RepositoryInterface
      * @return mixed
      */
     public function find($id, $columns = array('*'));
-
 }

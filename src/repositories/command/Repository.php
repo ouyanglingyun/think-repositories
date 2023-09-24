@@ -1,13 +1,14 @@
 <?php
-declare (strict_types = 1);
 
-namespace lingyun\repositories\command;
+declare(strict_types=1);
 
-use think\console\command\Make;
+namespace think\repositories\command;
+
 use think\console\Input;
+use think\console\Output;
+use think\console\command\Make;
 use think\console\input\Argument;
 use think\console\input\Option;
-use think\console\Output;
 
 class Repository extends Make
 {
@@ -141,5 +142,4 @@ class Repository extends Make
     {
         return parent::getNamespace($app) . '\\repositories';
     }
-
 }

@@ -8,30 +8,19 @@ think-repositories is a package for Thinkphp 6.0 which is used to abstract the d
 
 Run the following command from you terminal:
 
-
- ```bash
- composer require "lingyun/repositories: 0.*"
- ```
-
-or add this to require section in your composer.json file:
-
- ```
- "lingyun/repositories": "0.*"
- ```
-
-then run ```composer update```
-
+```bash
+composer require think/repositories
+```
 
 ## Usage
 
-First, create your repository class. Note that your repository class MUST extend ```lingyun\repositories\Repository``` and implement model() method
+First, create your repository class. Note that your repository class MUST extend `think\Repository` and implement model() method
 
 ```php
-<?php 
+<?php
 namespace app\repositories;
 
-use lingyun\repositories\Contracts\RepositoryInterface;
-use lingyun\repositories\Repository;
+use think\Repository;
 
 class FilmsRepository extends Repository {
 
@@ -40,15 +29,15 @@ class FilmsRepository extends Repository {
     }
 }
 ```
-It can be created using the ```make:R``` command:
 
-```php think make:R admin@data/City common@data/DataCity --E=common@BaseRepository```
+It can be created using the `make:R` command:
 
+`php think make:R admin@data/City common@data/DataCity --E=common@BaseRepository`
 
-By implementing ```model()``` method you telling repository what model class you want to use. Now, create ```App\Film``` model:
+By implementing `model()` method you telling repository what model class you want to use. Now, create `App\Film` model:
 
 ```php
-<?php 
+<?php
 namespace app\model;
 
 use think\Model;
@@ -68,7 +57,7 @@ class Film extends Model {
 And finally, use the repository in the controller:
 
 ```php
-<?php 
+<?php
 namespace app\controller;
 
 use app\repositories\FilmsRepository as Film;
@@ -90,4 +79,4 @@ class FilmsController extends Controller {
 
 ## Thanks
 
-This package is largely inspired by [this](https://github.com/bosnadev/repository) great package by @bosnadev. 
+This package is largely inspired by [this](https://github.com/bosnadev/repository) great package by @bosnadev.

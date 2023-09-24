@@ -1,22 +1,24 @@
 <?php
-declare (strict_types = 1);
 
-namespace lingyun\repositories\command;
+declare(strict_types=1);
 
-use think\console\command\Make;
+namespace think\repositories\command;
+
 use think\console\Input;
-use think\console\input\Option;
 use think\console\Output;
+use think\console\command\Make;
+use think\console\input\Option;
 
-class Model extends Make
+class Controller extends Make
 {
-    protected $type = "Model";
+    protected $type = "Controller";
     protected function configure()
     {
         parent::configure();
-        $this->setName('make:M')
+        $this->setName('make:C')
+            ->addOption('middleware', "M", Option::VALUE_OPTIONAL, 'The middleware of the Controller class.')
             ->addOption('extends', "E", Option::VALUE_OPTIONAL, 'Generate extends an Controller class.')
-            ->setDescription('Create a new model class');
+            ->setDescription('Create a new resource Controller class');
     }
 
     protected function execute(Input $input, Output $output)
@@ -25,7 +27,18 @@ class Model extends Make
         if ($input->hasOption('extends')) {
             $extends = $input->getOption('extends');
         } else {
-            $extends = "common@Common";
+            $extends = "BaseController";
+        }
+
+        if ($input->hasOption('middleware')) {
+            $middlewareArray = explode(',', $input->getOption('middleware'));
+
+            foreach ($middlewareArray as $key => $value) {
+                $middlewareArray[$key] = "'{$value}'";
+            }
+            $middlewareArray = "[" . implode(',', $middlewareArray) . "]";
+        } else {
+            $middlewareArray = "[]";
         }
 
         $extendsClassname = $this->getClassName($extends);
@@ -43,12 +56,12 @@ class Model extends Make
             mkdir(dirname($pathname), 0755, true);
         }
 
-        file_put_contents($pathname, $this->buildModel($classname, $extendsClassname));
+        file_put_contents($pathname, $this->buildController($classname, $middlewareArray, $extendsClassname));
 
         $output->writeln('<info>' . $this->type . ':' . $classname . ' created successfully.</info>');
     }
 
-    protected function buildModel(string $name, string $extends)
+    protected function buildController(string $name, string $middlewareArray, string $extends)
     {
         $stub = file_get_contents($this->getStub());
 
@@ -65,6 +78,7 @@ class Model extends Make
             '{%actionSuffix%}',
             '{%namespace%}',
             '{%app_namespace%}',
+            '{%middlewareArray%}',
             '{%extendsClass%}',
             '{%useExtendsClass%}',
         ], [
@@ -72,6 +86,7 @@ class Model extends Make
             $this->app->config->get('route.action_suffix'),
             $namespace,
             $this->app->getNamespace(),
+            $middlewareArray,
             $extendsClass,
             $extends,
         ], $stub);
@@ -79,11 +94,18 @@ class Model extends Make
 
     protected function getStub(): string
     {
-        return __DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'model.stub';
+        $stubPath = __DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
+
+        return $stubPath . 'controller.api.stub';
+    }
+
+    protected function getClassName(string $name): string
+    {
+        return parent::getClassName($name) . ($this->app->config->get('route.controller_suffix') ? 'Controller' : '');
     }
 
     protected function getNamespace(string $app): string
     {
-        return parent::getNamespace($app) . '\\model';
+        return parent::getNamespace($app) . '\\controller';
     }
 }
